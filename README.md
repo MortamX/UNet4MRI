@@ -2,7 +2,7 @@
 
 Using UNet and UNet++ to compute Brain MRI segmentation. Both networks are implemented in Tensorflow due to the current lack of available examples online (most of them are in PyTorch). 
 
-## unet.ipynb
+## unet.ipynb : the baseline
 
 Notebook ran on Kaggle for storage and GPU purpose.
 
@@ -22,3 +22,11 @@ To summarize, the next steps are :
 * Try UNet++ to deal with the absence of prediction of small tumors.
 * Try methods with patching for this same issue.
 * Implement and fine-tune different losses to increase sensibility of the UNet model. Obviously, this step can benefit to the other models (UNet++ and others) when implemented.
+
+## unet-weighted-bce.ipynb : implementing the weighted binary crossentropy loss
+
+#### A few observations :
+
+Weighted BCE considerably improves the results! The previous version with class binary crossentropy predicted a blank mask when a tumor had to be found on the input. With weighted BCE, this doesn't happen. Moreover, this method seems to more precise as it seems to better handle edgy tumors.
+
+The weigth used in this implementation is simply computed as the mean number of *1.* pixels in the trainning masks. This may be improved or at least require a little bit more of work.
